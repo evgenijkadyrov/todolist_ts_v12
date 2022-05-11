@@ -1,6 +1,13 @@
-import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, tasksReducer} from './tasks-reducer';
+import {
+    addTaskAC,
+    changeTaskStatusAC,
+    changeTaskTitleAC,
+    removeTaskAC,
+    setTasksAC,
+    tasksReducer
+} from './tasks-reducer';
 import {TasksStateType} from '../App';
-import {addTodolistAC, removeTodolistAC} from './todolists-reducer';
+import {addTodolistAC, removeTodolistAC, setTodolistAC} from './todolists-reducer';
 import {TaskPriorities, TaskStatuses} from "../api/todolist-api";
 
 let startState: TasksStateType = {};
@@ -81,3 +88,25 @@ test('propertry with todolistId should be deleted', () => {
     expect(keys.length).toBe(1);
     expect(endState["todolistId2"]).not.toBeDefined();
 });
+
+test('empty array should be added when todolist set', () => {
+    const action = setTodolistAC([
+        {id:'1', title:'1',order:2, addedDate:''},
+        {id:'2', title:'1',order:2, addedDate:''}
+    ]);
+
+    const endState = tasksReducer({}, action)
+
+    const keys = Object.keys(endState);
+
+    expect(keys.length).toBe(2);
+
+});
+
+test('set tasks to todolists from redux',()=>{
+const action=setTasksAC([ { id: "1", title: "bread", status:TaskStatuses.New, description:'', completed:true, priority:TaskPriorities.Low,addedDate:'',deadline:'',order:2,startDate:'',todoListId: 'todolistId2' },
+    { id: "2", title: "milk", status:TaskStatuses.Completed, description:'', completed:true, priority:TaskPriorities.Low,addedDate:'',deadline:'',order:2,startDate:'',todoListId: 'todolistId2'}],'todolistId2')
+    const endState=tasksReducer({'todolistId1': [], 'todolistId2': []},action)
+
+expect(endState['todolistId2'][1].title).toBe('milk')
+})
