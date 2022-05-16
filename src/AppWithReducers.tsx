@@ -1,6 +1,6 @@
-import React, {useReducer, useState} from 'react';
+import React, {useReducer} from 'react';
 import './App.css';
-import { Todolist} from './Todolist';
+import {Todolist} from './Todolist';
 import {v1} from 'uuid';
 import {AddItemForm} from './AddItemForm';
 import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from '@material-ui/core';
@@ -8,11 +8,12 @@ import {Menu} from '@material-ui/icons';
 import {
     addTodolistAC,
     changeTodolistFilterAC,
-    changeTodolistTitleAC, FilterValuesType,
+    changeTodolistTitleAC,
+    FilterValuesType,
     removeTodolistAC,
     todolistsReducer
 } from './state/todolists-reducer';
-import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, tasksReducer} from './state/tasks-reducer';
+import {addTaskAC, changeTaskAC, removeTaskAC, tasksReducer} from './state/tasks-reducer';
 import {TaskPriorities, TaskStatuses, TaskType} from "./api/todolist-api";
 
 
@@ -47,17 +48,29 @@ function AppWithReducers() {
     }
 
     function addTask(title: string, todolistId: string) {
-        const action = addTaskAC(title, todolistId);
+        const action = addTaskAC({
+            todoListId:'123',
+            status:TaskStatuses.New,
+            title:'dsdsdd',
+            id:'sd',
+            addedDate:'ddd',
+            completed:true,
+            deadline:'sfff',
+            description:'ddd',
+            order:6,
+            priority:2,
+            startDate:'ddd'
+        });
         dispatchToTasks(action);
     }
 
     function changeStatus(id: string, status:TaskStatuses, todolistId: string) {
-        const action = changeTaskStatusAC(id, status, todolistId);
+        const action = changeTaskAC(id, {status}, todolistId);
         dispatchToTasks(action);
     }
 
     function changeTaskTitle(id: string, newTitle: string, todolistId: string) {
-        const action = changeTaskTitleAC(id, newTitle, todolistId);
+        const action = changeTaskAC(id, {title:newTitle}, todolistId);
         dispatchToTasks(action);
     }
 
@@ -78,7 +91,12 @@ function AppWithReducers() {
     }
 
     function addTodolist(title: string) {
-        const action = addTodolistAC(title);
+        const action = addTodolistAC({
+            id:'123',
+            addedDate:'dcd',
+            order:2,
+            title:'xcxc'
+        });
         dispatchToTasks(action);
         dispatchToTodolists(action);
     }

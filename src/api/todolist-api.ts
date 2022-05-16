@@ -76,7 +76,7 @@ export const todoListAPI={
         return promise
     },
     createTodoList(title:string){
-        const promise=instance.post<ResponseType<{items:TodolistType}>>('todo-lists',{title})
+        const promise=instance.post<ResponseType<{item:TodolistType}>>('todo-lists',{title})
         return promise
     },
     deleteTodolist(todolistId:string){
@@ -88,7 +88,7 @@ export const todoListAPI={
         return promise
     },
     createTask(todolistId:string,title:string){
-        const promise=instance.post<ResponseType<TaskType>>(`todo-lists/${todolistId}/tasks`,{title})
+        const promise=instance.post<ResponseType<{item:TaskType}>>(`todo-lists/${todolistId}/tasks`,{title})
         return promise
     },
     updateTask(todolistId:string, taskId:string,  model:UpdateTaskModelType){
