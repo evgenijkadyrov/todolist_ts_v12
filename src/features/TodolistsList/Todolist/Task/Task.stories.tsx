@@ -4,7 +4,7 @@ import {ComponentMeta, ComponentStory} from "@storybook/react/dist/ts3.9/client/
 
 import {action} from "@storybook/addon-actions";
 import {Task} from "./Task";
-import {TaskPriorities, TaskStatuses} from "./api/todolist-api";
+import {TaskPriorities, TaskStatuses} from "../../../../api/todolist-api";
 
 
 

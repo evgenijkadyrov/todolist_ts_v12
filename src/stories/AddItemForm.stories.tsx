@@ -4,7 +4,7 @@ import {within} from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 import {action} from "@storybook/addon-actions";
-import {AddItemForm} from "../AddItemForm";
+import {AddItemForm} from "../components/addItemForm/AddItemForm";
 
 
 export default {

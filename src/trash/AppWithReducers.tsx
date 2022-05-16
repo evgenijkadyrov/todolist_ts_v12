@@ -1,8 +1,8 @@
 import React, {useReducer} from 'react';
-import './App.css';
-import {Todolist} from './Todolist';
+import '../app/App.css';
+import {Todolist} from '../features/TodolistsList/Todolist/Todolist';
 import {v1} from 'uuid';
-import {AddItemForm} from './AddItemForm';
+import {AddItemForm} from '../components/addItemForm/AddItemForm';
 import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from '@material-ui/core';
 import {Menu} from '@material-ui/icons';
 import {
@@ -12,9 +12,9 @@ import {
     FilterValuesType,
     removeTodolistAC,
     todolistsReducer
-} from './state/todolists-reducer';
-import {addTaskAC, changeTaskAC, removeTaskAC, tasksReducer} from './state/tasks-reducer';
-import {TaskPriorities, TaskStatuses, TaskType} from "./api/todolist-api";
+} from '../features/TodolistsList/todolists-reducer';
+import {addTaskAC, changeTaskAC, removeTaskAC, tasksReducer} from '../features/TodolistsList/tasks-reducer';
+import {TaskPriorities, TaskStatuses, TaskType} from "../api/todolist-api";
 
 
 export type TasksStateType = {
