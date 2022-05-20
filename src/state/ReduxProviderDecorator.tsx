@@ -1,4 +1,5 @@
 import React from 'react'
+/*
 import {Provider} from 'react-redux'
 import {combineReducers, createStore} from 'redux'
 import {tasksReducer} from '../features/TodolistsList/tasks-reducer'
@@ -50,4 +51,5 @@ export const ReduxProviderDecorator = (StoryFn: Story) => {
 
     );
 };
+*/
 

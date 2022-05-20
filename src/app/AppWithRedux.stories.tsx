@@ -1,7 +1,8 @@
 import React from 'react';
+/*
 import {ComponentMeta, ComponentStory} from "@storybook/react/dist/ts3.9/client/preview/types-6-3";
 import AppWithRedux from "./AppWithRedux";
-import {ReduxProviderDecorator} from "../state/ReduxProviderDecorator";
+/!*import {ReduxProviderDecorator} from "../state/ReduxProviderDecorator";*!/
 
 export default {
     title: 'AppWithRedux',
@@ -18,3 +19,4 @@ export const AppWithReduxStory = Template.bind({})
 //AppWithReduxStory.args = {
 
 //
+*/

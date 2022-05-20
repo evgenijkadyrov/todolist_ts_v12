@@ -7,6 +7,7 @@ import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography}
 import {Menu} from '@material-ui/icons';
 import {TaskPriorities, TaskStatuses, TaskType} from "../api/todolist-api";
 import {FilterValuesType, TodolistDomainType} from "../features/TodolistsList/todolists-reducer";
+import {LinearProgress} from "@mui/material";
 
 
 export type TasksStateType = {
@@ -185,7 +186,9 @@ function App() {
                     </Typography>
                     <Button color="inherit">Login</Button>
                 </Toolbar>
+
             </AppBar>
+
             <Container fixed>
                 <Grid container style={{padding: "20px"}}>
                     <AddItemForm addItem={addTodolist}/>

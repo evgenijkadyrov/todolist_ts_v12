@@ -1,6 +1,7 @@
 import {todoListAPI, TodolistType} from "../../api/todolist-api";
-import {Dispatch} from "redux";
-import {AppActionType, AppThunk} from "../../app/store";
+import {AppThunk} from "../../app/store";
+import {AppActionsType, setAppStatusAC} from "../../api/app-reducer";
+import {action} from "@storybook/addon-actions";
 
 const initialState: Array<TodolistDomainType> = []
 
@@ -52,8 +53,11 @@ export const setTodolistAC = (todolists: Array<TodolistType>) => ({type: 'SET-TO
 //thunk on async await
 export const fetchTodolistsTC = (): AppThunk => async dispatch => {
     try {
+        dispatch(setAppStatusAC('loading'))
         const res = await todoListAPI.getTodolists()
+        dispatch(setAppStatusAC('idle'))
         dispatch(setTodolistAC(res.data))
+
     } catch (e) {
         console.log(e)
     }
@@ -69,7 +73,9 @@ export const fetchTodolistsTC = (): AppThunk => async dispatch => {
 //thunk on async await
 export const removeTodolistTC = (todolistId: string): AppThunk => async dispatch => {
     try {
+        dispatch(setAppStatusAC('loading'))
         const res = await todoListAPI.deleteTodolist(todolistId)
+        dispatch(setAppStatusAC('idle'))
         dispatch(removeTodolistAC(todolistId))
     } catch (e) {
         console.log(e)
@@ -78,17 +84,21 @@ export const removeTodolistTC = (todolistId: string): AppThunk => async dispatch
 
 export const addTodolistTC = (title: string): AppThunk => {
     return (dispatch) => {
+        dispatch(setAppStatusAC('loading'))
         todoListAPI.createTodoList(title)
             .then((res) => {
                 const newTodolist = res.data.data.item
+                dispatch(setAppStatusAC('idle'))
                 dispatch(addTodolistAC(newTodolist))
             })
     }
 }
 export const updateTotolistTitleTC = (todolistId: string, title: string): AppThunk => {
     return (dispatch) => {
+        dispatch(setAppStatusAC('loading'))
         todoListAPI.updateTodoList(todolistId, title)
             .then((res) => {
+                dispatch(setAppStatusAC('idle'))
                 dispatch(changeTodolistTitleAC(todolistId, title))
             })
     }
@@ -112,3 +122,4 @@ export type TodolistsActionsType =
     | ChangeTodolistTitleActionType
     | ChangeTodolistFilterActionType
     | SetTodolistsAT
+|AppActionsType
