@@ -1,4 +1,3 @@
-
 import {AddTodolistActionType, RemoveTodolistActionType, SetTodolistsAT} from './todolists-reducer';
 import {TaskType, todoListAPI, UpdateTaskModelType} from "../../api/todolist-api";
 import {AppRootStateType, AppThunk} from "../../app/store";
@@ -55,11 +54,11 @@ export const changeTaskAC = (taskId: string, model: UpdateDomainTaskModelType, t
 export const setTasksAC = (tasks: Array<TaskType>, todolistId: string) =>
     ({type: 'SET-TASKS', tasks, todolistId} as const)
 
-enum resultStatus {
-    'idle'=0,
-    'loading'=1,
-    'succeed'=2
-}
+/*export enum resultStatus {
+    'idle',
+    'loading',
+    'succeed'
+}*/
 
 //thunks
 export const fetchTaskTC = (todolistId: string): AppThunk => (dispatch) => {
@@ -84,13 +83,14 @@ export const addTaskTC = (todolistId: string, title: string): AppThunk => (dispa
     dispatch(setAppStatusAC('loading'))
     todoListAPI.createTask(todolistId, title)
         .then((res) => {
-            if (res.data.resultCode === resultStatus.idle) {
+            if (res.data.resultCode === 0) {
                 dispatch(addTaskAC(res.data.data.item))
+                dispatch(setAppStatusAC('idle'))
             } else {
-                handlerAppError(dispatch,res.data)
+                handlerAppError(dispatch, res.data)
             }
         })
-        .catch((error:AxiosError)=>{
+        .catch((error: AxiosError) => {
             handlerError(dispatch, error.message)
         })
 

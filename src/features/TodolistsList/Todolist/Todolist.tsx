@@ -14,11 +14,11 @@ import {RequestStatusType} from "../../../api/app-reducer";
 type PropsType = {
     id: string
     title: string
-    entityStatus:RequestStatusType
+    entityStatus: RequestStatusType
     tasks: Array<TaskType>
     changeFilter: (value: FilterValuesType, todolistId: string) => void
     addTask: (title: string, todolistId: string) => void
-    changeTaskStatus: (id: string, status:TaskStatuses, todolistId: string) => void
+    changeTaskStatus: (id: string, status: TaskStatuses, todolistId: string) => void
     changeTaskTitle: (taskId: string, newTitle: string, todolistId: string) => void
     removeTask: (taskId: string, todolistId: string) => void
     removeTodolist: (id: string) => void
@@ -29,11 +29,10 @@ type PropsType = {
 
 export const Todolist = React.memo(function (props: PropsType) {
     console.log('Todolist is called')
-   const dispatch=useDispatch()
+    const dispatch = useDispatch()
     useEffect(() => {
         dispatch(fetchTaskTC(props.id))
-    },[])
-
+    }, [])
 
 
     const addTask = useCallback((title: string) => {
@@ -62,11 +61,11 @@ export const Todolist = React.memo(function (props: PropsType) {
 
     return <div>
         <h3><EditableSpan value={props.title} onChange={changeTodolistTitle}/>
-            <IconButton onClick={removeTodolist} disabled={props.entityStatus==='loading'}>
+            <IconButton onClick={removeTodolist} disabled={props.entityStatus === 'loading'}>
                 <Delete/>
             </IconButton>
         </h3>
-        <AddItemForm addItem={addTask} disabled={props.entityStatus==='loading'}/>
+        <AddItemForm addItem={addTask} disabled={props.entityStatus === 'loading'}/>
         <div>
             {
                 tasksForTodolist.map(t => <Task

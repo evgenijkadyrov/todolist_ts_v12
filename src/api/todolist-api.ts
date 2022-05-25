@@ -9,6 +9,22 @@ const instance = axios.create({
 })
 
 //api
+export const authAPI = {
+    login(data: LoginParamsType) {
+        const promise = instance.post<ResponseType<{ userId: number }>>('auth/login', data)
+        return promise
+    },
+    me() {
+        const promise = instance.get<ResponseType<MeResponseType>>('auth/me')
+        return promise
+    },
+    logout() {
+        const promise = instance.delete<ResponseType>('auth/login')
+        return promise
+    }
+}
+
+
 export const todoListAPI = {
     updateTodoList(todolistId: string, title: string) {
         const promise =
@@ -46,6 +62,18 @@ export const todoListAPI = {
 }
 
 //types
+export type LoginParamsType = {
+    email: string,
+    password: string,
+    rememberMe?: boolean,
+    captcha?: string
+}
+type MeResponseType = {
+    id: number,
+    email: string,
+    login: string
+}
+
 export type TodolistType = {
     id: string,
     title: string,
@@ -58,12 +86,14 @@ export type  ResponseType<D = {}> = {
     fieldsErrors: string[],
     resultCode: number
 }
+
 export enum TaskStatuses {
     New,
     InProgress,
     Completed,
     Draft
 }
+
 export enum TaskPriorities {
     Low,
     Middle,
@@ -71,6 +101,7 @@ export enum TaskPriorities {
     Urgentli,
     Later
 }
+
 export type TaskType = {
     description: string
     title: string
