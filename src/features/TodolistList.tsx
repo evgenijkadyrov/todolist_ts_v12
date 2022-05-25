@@ -80,12 +80,14 @@ export const TodolistList: React.FC<TodolistListPropstype> = (props) => {
                                 <Todolist
                                     id={tl.id}
                                     title={tl.title}
+                                    entityStatus={tl.entityStatus}
+                                    filter={tl.filter}
                                     tasks={tasksForTodolist}
                                     removeTask={removeTask}
                                     changeFilter={changeFilter}
                                     addTask={addTask}
                                     changeTaskStatus={changeStatus}
-                                    filter={tl.filter}
+
                                     removeTodolist={removeTodolist}
                                     changeTaskTitle={changeTaskTitle}
                                     changeTodolistTitle={changeTodolistTitle}

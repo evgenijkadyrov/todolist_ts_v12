@@ -1,8 +1,11 @@
-import {TasksStateType} from '../../app/App';
+
 import {AddTodolistActionType, RemoveTodolistActionType, SetTodolistsAT} from './todolists-reducer';
 import {TaskType, todoListAPI, UpdateTaskModelType} from "../../api/todolist-api";
 import {AppRootStateType, AppThunk} from "../../app/store";
 import {AppActionsType, setAppErrorAC, setAppStatusAC} from "../../api/app-reducer";
+import {TasksStateType} from "../../app/AppWithRedux";
+import {AxiosError} from "axios";
+import {handlerAppError, handlerError} from "../../utils/utils-error";
 
 const initialState: TasksStateType = {
     count: []
@@ -52,6 +55,12 @@ export const changeTaskAC = (taskId: string, model: UpdateDomainTaskModelType, t
 export const setTasksAC = (tasks: Array<TaskType>, todolistId: string) =>
     ({type: 'SET-TASKS', tasks, todolistId} as const)
 
+enum resultStatus {
+    'idle'=0,
+    'loading'=1,
+    'succeed'=2
+}
+
 //thunks
 export const fetchTaskTC = (todolistId: string): AppThunk => (dispatch) => {
     dispatch(setAppStatusAC('loading'))
@@ -75,17 +84,16 @@ export const addTaskTC = (todolistId: string, title: string): AppThunk => (dispa
     dispatch(setAppStatusAC('loading'))
     todoListAPI.createTask(todolistId, title)
         .then((res) => {
-            if (res.data.resultCode === 0) {
-                const task = res.data.data.item
-                const action = addTaskAC(task)
-                dispatch(setAppStatusAC('idle'))
-                dispatch(action)
+            if (res.data.resultCode === resultStatus.idle) {
+                dispatch(addTaskAC(res.data.data.item))
             } else {
-                dispatch(setAppStatusAC('failed'))
-                dispatch(setAppErrorAC(res.data.messages.length ? res.data.messages[0] : 'Some error'))
+                handlerAppError(dispatch,res.data)
             }
-
         })
+        .catch((error:AxiosError)=>{
+            handlerError(dispatch, error.message)
+        })
+
 }
 
 export const updateTaskTC = (taskId: string, domainModel: UpdateDomainTaskModelType, todolistId: string): AppThunk => (dispatch, getState: () => AppRootStateType) => {

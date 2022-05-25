@@ -6,9 +6,10 @@ import {
     setTasksAC,
     tasksReducer
 } from './tasks-reducer';
-import {TasksStateType} from '../../app/App';
+
 import {addTodolistAC, removeTodolistAC, setTodolistAC} from './todolists-reducer';
 import {TaskPriorities, TaskStatuses} from "../../api/todolist-api";
+import {TasksStateType} from "../../app/AppWithRedux";
 
 let startState: TasksStateType = {};
 beforeEach(() => {
